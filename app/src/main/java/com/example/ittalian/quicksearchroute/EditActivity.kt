@@ -1,7 +1,6 @@
 package com.example.ittalian.quicksearchroute
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +8,6 @@ import com.example.ittalian.quicksearchroute.databinding.ActivityEditBinding
 import io.realm.Realm
 import io.realm.kotlin.createObject
 import io.realm.kotlin.where
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.URL
-import org.json.JSONObject
 
 class EditActivity : AppCompatActivity() {
     private lateinit var realm: Realm
@@ -36,8 +31,8 @@ class EditActivity : AppCompatActivity() {
         }
 
         _binding.savebtn.setOnClickListener {
-            var departStation: String = ""
-            var arriveStation: String = ""
+            var departStation = ""
+            var arriveStation = ""
 
             if (!_binding.departStation.text.isNullOrEmpty())
                 departStation = _binding.departStation.text.toString()
@@ -57,7 +52,8 @@ class EditActivity : AppCompatActivity() {
 
                 else -> {
                     realm.executeTransaction {
-                        val course = realm.where<Course>().equalTo("id", courseId).findFirst()
+                        val course =
+                            realm.where<Course>().equalTo("id", courseId).findFirst()
                         course?.departStaion = departStation
                         course?.arriveStation = arriveStation
                     }

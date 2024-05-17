@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -43,7 +41,7 @@ class CustomRecyclerViewAdapter(realmResults: RealmResults<Course>, apiKey: Stri
         holder.itemView.setOnClickListener {
             val departStation = rResult[position]?.departStaion
             val arriveStation = rResult[position]?.arriveStation
-            val request = "$mainUrl?key=$apiKey&from=${departStation}&to=${arriveStation}"
+            val request = "$mainUrl?key=$apiKey&from=${departStation}&to=${arriveStation}&shinkansen=true&plane=true&limitedExpress=true"
             courseTask(request, it.context)
         }
         holder.editBtn?.setOnClickListener {
@@ -55,8 +53,12 @@ class CustomRecyclerViewAdapter(realmResults: RealmResults<Course>, apiKey: Stri
 
     private fun courseTask(request: String, context: Context) {
         GlobalScope.launch {
-            val result = courseBackGroundTask(request)
-            courseJsonTask(result, context)
+            try {
+                val result = courseBackGroundTask(request)
+                courseJsonTask(result, context)
+            } catch (e: IOException) {
+
+            }
         }
     }
 
@@ -64,15 +66,9 @@ class CustomRecyclerViewAdapter(realmResults: RealmResults<Course>, apiKey: Stri
         val response = withContext(Dispatchers.IO) {
             var httpResult = ""
 
-            try {
-                val urlObj = URL(request)
-                val br = BufferedReader(InputStreamReader(urlObj.openStream()))
-                httpResult = br.readText()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
+            val urlObj = URL(request)
+            val br = BufferedReader(InputStreamReader(urlObj.openStream()))
+            httpResult = br.readText()
 
             return@withContext httpResult
         }

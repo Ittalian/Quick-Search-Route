@@ -22,8 +22,6 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(_binding.root)
 
-        setSupportActionBar(_binding.toolbar)
-
         realm = Realm.getDefaultInstance()
 
         _binding.toEditPage.setOnClickListener {

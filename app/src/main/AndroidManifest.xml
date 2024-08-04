@@ -9,12 +9,13 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@drawable/icon_foreground"
         android:label="かんたん検索"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickSearchRoute"
         tools:targetApi="34">
         <activity android:name=".EditActivity"
+            android:exported="false" />
+        <activity android:name=".EditTimeActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

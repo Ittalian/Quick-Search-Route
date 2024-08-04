@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/edit_time_background">
+
+    <Button
+        android:id="@+id/searchBtn"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/square_btn"
+        android:padding="5dp"
+        android:text="@string/search_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <Button
+        android:id="@+id/reverseSearchBtn"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="75dp"
+        android:background="@drawable/square_btn"
+        android:padding="5dp"
+        android:text="@string/reverse_search_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/searchBtn" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="0dp"
+        android:background="@color/white"
+        android:padding="5dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colon">
+
+        <RadioButton
+            android:id="@+id/currentRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/currentRadio"
+            android:textSize="16sp"
+            tools:visibility="visible" />
+
+        <RadioButton
+            android:id="@+id/departRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/departRadio"
+            android:textSize="16sp"
+            tools:visibility="visible" />
+
+        <RadioButton
+            android:id="@+id/arriveRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/arriveRadio"
+            android:textSize="16sp"
+            tools:visibility="visible" />
+
+        <RadioButton
+            android:id="@+id/startRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/startRadio"
+            android:textSize="16sp"
+            tools:visibility="visible" />
+
+        <RadioButton
+            android:id="@+id/lastRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lastRadio"
+            android:textSize="16sp"
+            tools:visibility="visible" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/colon"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="430dp"
+        android:background="@color/white"
+        android:padding="5dp"
+        android:text="@string/colon"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/hourText"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="00"
+        android:inputType="time"
+        android:padding="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/colon"
+        app:layout_constraintTop_toTopOf="@+id/colon" />
+
+    <EditText
+        android:id="@+id/minuteText"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="00"
+        android:inputType="time"
+        android:padding="5dp"
+        app:layout_constraintStart_toEndOf="@+id/colon"
+        app:layout_constraintTop_toTopOf="@+id/colon" />
+</androidx.constraintlayout.widget.ConstraintLayout>

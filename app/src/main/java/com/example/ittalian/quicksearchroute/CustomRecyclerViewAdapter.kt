@@ -17,7 +17,6 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.URL
-
 class CustomRecyclerViewAdapter(realmResults: RealmResults<Course>, apiKey: String) : RecyclerView.Adapter<ViewHolder>() {
     private var rResult: RealmResults<Course> = realmResults
     private val mainUrl = "https://api.ekispert.jp/v1/json/search/course/light"
@@ -35,19 +34,31 @@ class CustomRecyclerViewAdapter(realmResults: RealmResults<Course>, apiKey: Stri
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val course = rResult[position]
+        val departStation = rResult[position]?.departStaion
+        val arriveStation = rResult[position]?.arriveStation
+        val request = "$mainUrl?key=$apiKey&from=${departStation}&to=${arriveStation}&shinkansen=true&plane=true&limitedExpress=true"
         holder.departStationText?.text = course?.departStaion.toString()
         holder.arriveStationText?.text = course?.arriveStation.toString()
         holder.itemView.setBackgroundColor(if (position % 2 == 0) Color.LTGRAY else Color.WHITE)
         holder.itemView.setOnClickListener {
-            val departStation = rResult[position]?.departStaion
-            val arriveStation = rResult[position]?.arriveStation
-            val request = "$mainUrl?key=$apiKey&from=${departStation}&to=${arriveStation}&shinkansen=true&plane=true&limitedExpress=true"
             courseTask(request, it.context)
         }
         holder.editBtn?.setOnClickListener {
             val intent = Intent(it.context, EditActivity::class.java)
             intent.putExtra("id", course?.id)
             it.context.startActivity(intent)
+        }
+        holder.editTimeBtn?.setOnClickListener {
+            val reverseRequest = "$mainUrl?key=$apiKey&from=${arriveStation}&to=${departStation}&shinkansen=true&plane=true&limitedExpress=true"
+            val intent = Intent(it.context, EditTimeActivity::class.java).apply {
+                putExtra("request", request)
+                putExtra("reverseRequest", reverseRequest)
+            }
+            it.context.startActivity(intent)
+        }
+        holder.itemView.setOnLongClickListener {
+            courseTask(request, it.context)
+            true
         }
     }
 
@@ -84,3 +95,4 @@ class CustomRecyclerViewAdapter(realmResults: RealmResults<Course>, apiKey: Stri
         context.startActivity(intent)
     }
 }
+

@@ -11,10 +11,12 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var departStationText: TextView? = null
     var arriveStationText: TextView? = null
     var editBtn: Button? = null
+    var editTimeBtn: Button? = null
 
     init {
         departStationText = itemView.findViewById(R.id.departStationText)
         arriveStationText = itemView.findViewById(R.id.arriveStationText)
         editBtn = itemView.findViewById(R.id.editBtn)
+        editTimeBtn = itemView.findViewById(R.id.editTimeBtn)
     }
 }

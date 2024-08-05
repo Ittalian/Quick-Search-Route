@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ittalian.quicksearchroute.databinding.ActivityEditTimeBinding
@@ -59,23 +61,37 @@ class EditTimeActivity() : AppCompatActivity() {
         }
 
         _binding.searchBtn.setOnClickListener {
-            courseTask(getRequest(request), it.context)
+            if (validateTime(_binding.hourText, _binding.minuteText)) courseTask(getRequest(request), it.context)
         }
 
         _binding.reverseSearchBtn.setOnClickListener {
-            courseTask(getRequest(reverseRequest), it.context)
+            if (validateTime(_binding.hourText, _binding.minuteText)) courseTask(getRequest(reverseRequest), it.context)
         }
     }
 
     private fun getRequest(request: String?): String? {
         if (searchType == getString(R.string.departSearchType) || searchType == getString(R.string.arriveSearchType)) {
-            if (!_binding.hourText.text.isNullOrEmpty() || !_binding.minuteText.text.isNullOrEmpty()) {
                 return "${request}&time=${_binding.hourText.text}${_binding.minuteText.text}&searchType=${searchType}"
-            }
         } else if (searchType == getString(R.string.startSearchType) || searchType == getString(R.string.lastSearchType)) {
             return "${request}&searchType=${searchType}"
         }
         return request
+    }
+
+    private fun validateTime(hour: EditText, minute: EditText): Boolean {
+        if (searchType == getString(R.string.departSearchType) || searchType == getString(R.string.arriveSearchType)) {
+            if (hour.text.isNullOrEmpty() || minute.text.isNullOrEmpty()) {
+                hour.requestFocus()
+                Toast.makeText(applicationContext, "入力してください", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            if (hour.length() != 0 && hour.length() != 2 || minute.length() != 0 && minute.length() != 2) {
+                hour.requestFocus()
+                Toast.makeText(applicationContext, "00:00の形式で入力てください", Toast.LENGTH_SHORT).show()
+                return false
+            }
+        }
+        return true
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
